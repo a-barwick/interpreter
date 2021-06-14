@@ -2,14 +2,21 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"os/user"
 
-	"github.com/a-barwick/interpreter/lexer"
-	"github.com/a-barwick/interpreter/token"
+	"github.com/a-barwick/interpreter/repl"
 )
 
 func main() {
-	hello := lexer.Parse()
-	world := token.Do()
+	user, err := user.Current()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
-	fmt.Printf("%s, %s!\n", hello, world)
+	fmt.Printf("Welcome to Monkey, %s\n", user.Username)
+	fmt.Println("Start typing")
+
+	repl.Start(os.Stdin, os.Stdout)
 }
