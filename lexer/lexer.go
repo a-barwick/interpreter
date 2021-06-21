@@ -84,24 +84,6 @@ func (l *Lexer) NextToken() token.Token {
 	return tok
 }
 
-type identifyByte func(ch byte) bool
-
-func isLetter(ch byte) bool {
-	return ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_'
-}
-
-func isInt(ch byte) bool {
-	return ch >= '0' && ch <= '9'
-}
-
-func isWhitespace(ch byte) bool {
-	return ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n'
-}
-
-func newToken(tokenType token.TokenType, ch byte) token.Token {
-	return token.Token{Type: tokenType, Literal: string(ch)}
-}
-
 func (l *Lexer) peekChar() byte {
 	if l.readPosition < len(l.input) {
 		return l.input[l.readPosition]
@@ -131,4 +113,22 @@ func (l *Lexer) skipWhitespace() {
 	for isWhitespace(l.ch) {
 		l.readChar()
 	}
+}
+
+type identifyByte func(ch byte) bool
+
+func isLetter(ch byte) bool {
+	return ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '_'
+}
+
+func isInt(ch byte) bool {
+	return ch >= '0' && ch <= '9'
+}
+
+func isWhitespace(ch byte) bool {
+	return ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n'
+}
+
+func newToken(tokenType token.TokenType, ch byte) token.Token {
+	return token.Token{Type: tokenType, Literal: string(ch)}
 }

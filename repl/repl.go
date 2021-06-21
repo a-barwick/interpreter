@@ -16,21 +16,15 @@ func Start(in io.Reader, out io.Writer) {
 
 	for {
 		fmt.Fprint(out, PROMPT)
-
 		scanned := scanner.Scan()
-
 		if !scanned {
 			return
 		}
-
 		line := scanner.Text()
-
 		if line == "exit" || line == "quit" {
 			return
 		}
-
 		l := lexer.New(line)
-
 		for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
 			fmt.Fprintf(out, "%+v\n", tok)
 		}
